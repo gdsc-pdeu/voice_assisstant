@@ -197,5 +197,12 @@ if __name__ == "__main__":
             weather_details=respons.json()
             speak("Temperature in " +city + " is " + str(weather_details["main"]["temp"])+" Kelvin, with "+str(weather_details["main"]["pressure"])+" hPascals")
 
+        elif "news" in query:
+            country = "in"
+            query_news = "idea"
+            response = requests.get("https://newsapi.org/v2/top-headlines?country="+ country +"&q="+ query_news +"&apiKey=4a733a4e0a2846acbe7ec32d8d1e2761")
+            speak(response.title)
+            pass
+
         else:
             speak("I didn't get you. Say that again")
