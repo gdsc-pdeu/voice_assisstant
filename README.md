@@ -1,3 +1,3 @@
 # voice_assisstant
 
-This project is created solely by malay damani
+This is a virtual voice assisstant. Hoping to connect it with NLP to make it a virtual assisstant chat bot(Just like jarvis)
