@@ -9,6 +9,10 @@ import requests
 import pyautogui #pip install pyautogui
 import psutil #pip install psutil
 import pyjokes #pip install pyjokes #Using pyjokes is another way to say jokes. Here we have just used an api
+import vlc 
+import pafy 
+from googlesearch import search 
+from twilio.rest import Client
 
 engine=pyttsx3.init()
 voices=engine.getProperty('voices')
@@ -112,6 +116,7 @@ if __name__ == "__main__":
             except Exception as e:
                 speak("Unable to send the mail")
                 print(e)
+
         elif "chrome" in query:
             speak("What link do you want me to open?")
             chromepath="C:/Program Files/Google/Chrome/Application/chrome.exe %s"
@@ -203,6 +208,42 @@ if __name__ == "__main__":
             response = requests.get("https://newsapi.org/v2/top-headlines?country="+ country +"&q="+ query_news +"&apiKey=4a733a4e0a2846acbe7ec32d8d1e2761")
             speak(response.title)
             pass
+
+        elif "youtube" in query:
+            j=list()
+    
+            for i in search(query, tld="co.in", num=10, stop=10, pause=2): 
+                j.append(i)
+            a=j[0]
+                #Playing video
+            url = a
+            video = pafy.new(url)  
+            best = video.streams[0]    
+            media = vlc.MediaPlayer(best.url) 
+            media.play()
+        
+        elif "sms" in query or "message" in query:
+            try:
+                client = Client("ACe2ef31a4d09f9846afcd486586495973", "8d2e36f767db9c4948d5ad81a03e933d")
+                speak("What are the contents of the sms?")
+                content=take_command()
+                
+                speak("State the name of the recipient")
+                name=take_command()
+                
+                speak("State the number of the recipient")
+                mobile=take_command()
+                number="+91"+str(mobile)
+
+                client.messages.create(to=number, 
+                                        from_="+13092711496", 
+                                        body=(content))
+                speak("Khat mene daal diya")
+            except Exception as e:
+                speak("Unable to send the sms")
+                print(e)
+
+
 
         else:
             speak("I didn't get you. Say that again")
